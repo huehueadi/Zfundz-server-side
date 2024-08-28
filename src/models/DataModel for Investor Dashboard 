@@ -1,0 +1,212 @@
+
++------------------+           +-------------------+           +-------------------+
+|      User        |1        n |      Property     |1        n |       Ticket      |
+|------------------|-----------|-------------------|-----------|-------------------|
+| userId (PK)      |------<    | propertyId (PK)   |------<    | ticketId (PK)     |
+| name             |           | userId (FK)       |           | propertyId (FK)   |
+| email            |           | name              |           | userId (FK)       |
+| password         |           | location          |           | quantity          |
+| mobile           |           | type              |           | purchaseDate      |
+| role             |           | currentValue      |           | createdAt         |
+| kycStatus        |           | moneySpent        |           | updatedAt         |
+| createdAt        |           | description       |           +-------------------+
+| updatedAt        |           | createdAt         |
++------------------+           | updatedAt         |
+                               +-------------------+
+
++---------------------+           +-------------------+           +-------------------+
+|   KYCVerification   |1        1 |   Notification    |1        n |     Support       |
+|---------------------|-----------|-------------------|-----------|-------------------|
+| kycId (PK)          |---->      | notificationId (PK)|------<   | supportId (PK)    |
+| userId (FK)         |           | userId (FK)       |           | userId (FK)       |
+| status              |           | message           |           | query             |
+| documents           |           | type              |           | response          |
+| submittedDate       |           | status            |           | status            |
+| verifiedDate        |           | date              |           | date              |
+| createdAt           |           | createdAt         |           | createdAt         |
+| updatedAt           |           | updatedAt         |           | updatedAt         |
++---------------------+           +-------------------+           +-------------------+
+
++------------------------+           +-------------------+           +-------------------+
+|   InvestmentOpportunity|1        n |       Profile     |1        1 |     Earnings      |
+|------------------------|-----------|-------------------|-----------|-------------------|
+| opportunityId (PK)     |---->      | profileId (PK)    |---->      | earningsId (PK)   |
+| userId (FK)            |           | userId (FK)       |           | userId (FK)       |
+| name                   |           | name              |           | propertyId (FK)   |
+| description            |           | email             |           | amount            |
+| potentialReturn        |           | phone             |           | date              |
+| riskLevel              |           | address           |           | source            |
+| createdAt              |           | createdAt         |           | createdAt         |
+| updatedAt              |           | updatedAt         |           | updatedAt         |
++------------------------+           +-------------------+           +-------------------+
+
++---------------------+           +---------------------+
+|     Transaction     |1        n |      Permission     |
+|---------------------|-----------|---------------------|
+| transactionId (PK)  |------<    | permissionId (PK)   |
+| userId (FK)         |           | roleId (FK)         |
+| propertyId (FK)     |           | permissionName      |
+| amount              |           | link                |
+| date                |           | icon                |
+| type                |           | createdAt           |
+| createdAt           |           | updatedAt           |
+| updatedAt           |           +---------------------+
++---------------------+
+
++---------------------+
+|        Role         |
+|---------------------|
+| roleId (PK)         |
+| roleName            |
+| createdAt           |
+| updatedAt           |
++---------------------+
+
+
+
+
+┌──────────────────────────────────────────────┐
+│             Investor                         │
+│──────────────────────────────────────────────│
+│ _id: ObjectId                                │
+│ fullName: String                             │
+│ email: String                                │
+│ password: String                             │
+│ createdAt: Date                              │
+│ updatedAt: Date                              │
+└──────────────────────────────────────────────┘
+                        |
+                        |
+                        | 1 to many
+                        |
+                        v
+┌──────────────────────────────────────────────┐
+│                 Property                     │
+│──────────────────────────────────────────────│
+│ _id: ObjectId                                │
+│ propertyName: String                         │
+│ propertyType: String                         │
+│ address: String                              │
+│ marketValue: Number                          │
+│ createdAt: Date                              │
+│ updatedAt: Date                              │
+│ spvBalanceSheet: {                           │
+│   assets: Number,                            │
+│   liabilities: Number,                       │
+│   equity: Number,                            │
+│   revenues: Number,                          │
+│   expenses: Number,                          │
+│   createdAt: Date,                           │
+│   updatedAt: Date                            │
+│ }                                            │
+└──────────────────────────────────────────────┘
+
+Details:
+- _id: ObjectId - Unique identifier for the Property.
+- propertyName: String - Name or identifier of the property.
+- propertyType: String - Type of the property (e.g., Residential, Commercial).
+- address: String - Address of the property.
+- marketValue: Number - Current market value of the property.
+- createdAt: Date - Timestamp when the property was created.
+- updatedAt: Date - Timestamp when the property was last updated.
+- spvBalanceSheet: Embedded document containing detailed financials.
+
+                        |
+                        |
+                        | 1 to many
+                        |
+                        v
+┌──────────────────────────────────────────────┐
+│                 Investment                   │
+│──────────────────────────────────────────────│
+│ _id: ObjectId                                │
+│ propertyId: ObjectId (ref to Property)       │
+│ type: String                                 │
+│ value: Number                                │
+│ purchasePrice: Number                        │
+│ quantity: Number                             │
+│ purchaseDate: Date                           │
+│ createdAt: Date                              │
+│ updatedAt: Date                              │
+│ spvBalanceSheet: {                           │
+│   assets: Number,                            │
+│   liabilities: Number,                       │
+│   equity: Number,                            │
+│   revenues: Number,                          │
+│   expenses: Number,                          │
+│   createdAt: Date,                           │
+│   updatedAt: Date                            │
+│ }                                            │
+└──────────────────────────────────────────────┘
+
+Details:
+- _id: ObjectId - Unique identifier for the Investment.
+- propertyId: ObjectId - Reference to the Property this investment is based on.
+- type: String - Type of the investment (e.g., Stock, Real Estate).
+- value: Number - Current value of the investment.
+- purchasePrice: Number - Purchase price of the investment.
+- quantity: Number - Quantity of the investment.
+- purchaseDate: Date - Date when the investment was purchased.
+- createdAt: Date - Timestamp when the investment was created.
+- updatedAt: Date - Timestamp when the investment was last updated.
+- spvBalanceSheet: Embedded document containing detailed financials.
+
+                        |
+                        |
+                        | 1 to many
+                        |
+                        v
+┌──────────────────────────────────────────────┐
+│                 Portfolio                    │
+│──────────────────────────────────────────────│
+│ _id: ObjectId                                │
+│ userId: ObjectId (ref to User)               │
+│ name: String                                 │
+│ totalValue: Number                           │
+│ createdAt: Date                              │
+│ updatedAt: Date                              │
+│ investments: [                               │
+│   {                                          │
+│    investmentId: ObjectId (ref to Investment)│
+│     propertyId: ObjectId (ref to Property),  │
+│     type: String,                            │
+│     value: Number,                           │
+│     purchasePrice: Number,                   │
+│     quantity: Number,                        │
+│     purchaseDate: Date,                      │
+│     createdAt: Date,                         │
+│     updatedAt: Date,                         │
+│     spvBalanceSheet: {                       │
+│       assets: Number,                        │
+│       liabilities: Number,                   │
+│       equity: Number,                        │
+│       revenues: Number,                      │
+│       expenses: Number,                      │
+│       createdAt: Date,                       │
+│       updatedAt: Date                        │
+│     }                                        │
+│   },                                         │
+│   ...                                        │
+│ ]                                            │
+└──────────────────────────────────────────────┘
+
+Details:
+- _id: ObjectId - Unique identifier for the Portfolio.
+- userId: ObjectId - Reference to the User who owns this portfolio.
+- name: String - Name of the portfolio.
+- totalValue: Number - Total value of all investments in this portfolio.
+- createdAt: Date - Timestamp when the portfolio was created.
+- updatedAt: Date - Timestamp when the portfolio was last updated.
+- investments: Array of embedded documents containing details about each investment and associated property, including SPV balance sheet information.
+
+
+[Users] -----------------------< [Investments] >---------------- [Properties]
+   |                                  |                              |
+   |                                  |                              |
+   +------ [Portfolios] <-------------+                              |
+   |                                                                 |
+   +----------------- [SPV] ----------------------< [Balance Sheets]-+
+   |
+   +-------------------- [Transactions]
+
+

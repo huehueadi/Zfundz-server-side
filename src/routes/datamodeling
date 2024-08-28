@@ -1,0 +1,79 @@
++-----------+          +-------------+          +-------------------+
+|   User    |          |  Franchise  |          |     Investment    |
++-----------+          +-------------+          +-------------------+
+| id        |<-------->| id          |          | id                |
+| username  |          | name        |          | user_id           |<--------+
+| password  |          | description |          | franchise_id      |         |
+| email     |          | investment_ |          | investment_amount |         |
+| full_name |          | required    |          | invested_date     |         |
+| date_of_  |          | category_id |<---------| status            |         |
+| birth     |          | created_at  |          | created_at        |         |
+| kyc_status|          | updated_at  |          | updated_at        |         |
+| role      |          +-------------+          +-------------------+         |
+| created_at|                                                                 |
+| updated_at|                                                                 |
++-----------+                                                                 |
+     |                                                                        |
+     |                                                                        |
+     v                                                                        |
++-----------+                                                                 |
+| KYC Docs  |                                                                 |
++-----------+                                                                 |
+| id        |                                                                 |
+| user_id   |<----------------------------------------------------------------+
+| doc_type  |
+| doc_url   |
+| status    |
+|uploaded_at|
++-----------+
+
++-----------+          +-------------+          +----------------+         +-------------+
+|   Admin   |          |  Audit Logs |          | Notifications  |         |   Payment   |
++-----------+          +-------------+          +----------------+         +-------------+
+| id        |          | id          |          | id             |         | id          |
+| username  |          | user_id     |<-------->| user_id        |         |investment_id|
+| password  |          | action      |          | message        |         |amount       |
+| email     |          | timestamp   |          | is_read        |         |payment_date |
+| full_name |          | details     |          | created_at     |         |status       |
+| role      |          +-------------+          +----------------+         +-------------+
+| created_at|                                                               |        
+| updated_at|                                                               |       
++-----------+                                                               |        
+                                                                            |
+                                                                            |
+                                                                            v 
++-----------+                                                              +------------+
+|  Roles    |                                                              |  Roles     |
++-----------+                                                              +------------+
+| id        |                                                              | id         |
+| role_name |                                                              |role_name   |
+|permissions|                                                              |permissions |
++-----------+                                                              +------------+
+           \                                                                    /
+            \                                                                  /
+             \                                                                /
+              +--------------------------------------------------------------+
+                               \                                                      
+                                \                                                    
+                                 +---------------------------------------------------------+
+                                                                  \                       /
+                                                                   \                     /
+                                                                    \                   /
+                                                                     +-----------------+
+                                                                     |     Category    |
+                                                                     +-----------------+
+                                                                     | id              |
+                                                                     | name            |
+                                                                     | created_at      |
+                                                                     | updated_at      |
+                                                                     +-----------------+
+
++-----------+          +------------------+
+| User CRUD |          | FranchiseCategory|
++-----------+          +------------------+
+| id        |          | franchise_id     |
+| admin_id  |          | category_id      |
+| user_id   |          +------------------+
+| action    |
+| timestamp |
++-----------+
