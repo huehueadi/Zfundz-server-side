@@ -4,7 +4,7 @@ import express from "express";
 import connection from "./src/db/connect.js";
 import router from "./src/routes/authroutes.js";
 
-import adminroutes from "../src/routes/adminroutes.js";
+import adminroutes from "./src/routes/adminroutes.js";
 
 const app = express()
 
