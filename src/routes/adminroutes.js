@@ -9,7 +9,7 @@ import {
     addRole, addUser, deletRole, deleteUser, getAllUsers, getUsers, updateUsers, viewRoles
 } from "../controllers/admin/authAdminController.js";
 import { addPermission, viewPermission } from "../controllers/admin/authAdminPermission.js";
-import { purchaseTicket } from "../controllers/admin/authTicketPurchase.js";
+import  purchaseTicket from "../controllers/admin/authTicketPurchase.js";
 import { createRazorpayOrder, verifyRazorpayPayment } from "../controllers/admin/paymentController.js";
 import authenticateToken from "../middleware/aiuthmidddleware.js";
 
